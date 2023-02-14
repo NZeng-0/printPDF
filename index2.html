@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <style>
+        #container {
+            display: flex;
+            justify-content: space-between
+        }
+
+        #left {
+            width: 300px;
+            height: 500px;
+            border: 1px solid skyblue;
+        }
+
+        #show {
+            margin: 0px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        1.根据输入表格行，列生成表格
+        2.生成后，可以具体操作某一个单元格。文本，标签类型，
+        C# Tcp连接 报文机
+
+        页面数据持久化，单元格样式动态调整
+
+        rowspan 行合并时 动态删除 合并方向 一个单元格
+        colspan 列合并时 动态删除 合并方向 一个单元格
+    -->
+    <div id="container">
+        <div id="left">
+            输入行<input type="text" id="row"><br />
+            输入列<input type="text" id="col"><br />
+            <button id="load">生成</button>
+            <br />
+            <hr />
+            行<input type="text" id="inputRow"><br />
+            列<input type="text" id="inputCol"><br />
+            标签类型<input type="text" id="inputType"><br />
+            标签内容<input type="text" id="inputContent"><br />
+            合并行<input type="text" id="inputRowspan"><br />
+            合并列<input type="text" id="inputColspan"><br />
+            宽度<input type="text" id="inputWidth"><br />
+            高度<input type="text" id="inputHeight"><br />
+            <button id="t">添加</button>
+        </div>
+        <div id="show">
+            <div id="app"></div>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('#load').click(function () {
+                // 获取行数
+                let row = $('#row').val();
+                // 获取列数
+                let col = $('#col').val();
+                // 调用方法生成表格
+                load(row, col);
+            })
+            $('#t').click(() => {
+                // 获取修改行
+                let row = $('#inputRow').val()
+                // 获取修改列
+                let col = $('#inputCol').val()
+                // 获取添加标签类型
+                let type = $('#inputType').val()
+                // 获取添加标签内容
+                let content = $('#inputContent').val()
+                // 获取行合并值
+                let rowSpan = $('#inputRowspan').val()
+                // 获取列合并值
+                let colSpan = $('#inputColspan').val()
+                // 获取单元格宽度
+                let width = $('#inputWidth').val()
+                // 获取单元格高度
+                let height = $('#inputHeight').val()
+
+                // 行值类型转换 string -> number
+                row = Number(row) - 1
+                // 列值类型转换 string -> number
+                col = Number(col) - 1
+
+                // 获取具体行列交叉单元格
+                let cell = $(`#${row + '-' + col}`)
+                // 判断标签类型是否是text
+                // 是 标签类型改为 input输入框
+                // 不是 标签类型以及输入值不变
+                if (type === 'text') {
+                    cell.append(`<input type="text">`)
+                } else {
+                    cell.append(`<${type}>${content}</${type}>`)
+                }
+                // 判断合并行值是否为空字符串
+                if (rowSpan != '') {
+                    cell.attr("rowSpan", Number(rowSpan));
+                }
+                // 判断列合并值是否为空字符串
+                if (colSpan != '') {
+                    cell.attr("colSpan", Number(colSpan))
+                    // 列合并后删除后面兄弟单元格
+                    /* 
+                        动态计算合并剩余数量
+                        合并3列，一共4列，删除2列
+                        删除顺序从后往前删除
+                    */
+                    cell.next().remove()
+                }
+            })
+        })
+
+        /**
+         * 生成表格方法
+         * @row 行
+         * @col 列
+        */
+        function load(row, col) {
+            // 模板字符串
+            let tab = `<table style="border: 1px solid black;">`
+            // 遍历输入行数
+            for (let i = 0; i < row; i++) {
+                tab = tab + `<tr>`
+                // 遍历输入列数
+                for (let j = 0; j < col; j++) {
+                    // 生成单元格
+                    tab = tab + `<td id="${i + '-' + j}" style="border: 1px solid black; width:200px;height:50px"></td>`
+                }
+                tab = tab + '</tr>'
+            }
+            tab = tab + '</table>'
+            // 添加html字符串
+            $('#app').append(tab)
+        }
+    </script>
+</body>
+
+</html>
