@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+    <script>
+        let content = {
+            "obj": [
+                {
+                    "id": "4845dc18a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 1,
+                    "cellcol": 1,
+                    "cellwidth": 540,
+                    "celltype": "title",
+                    "cellcode": "title",
+                    "cellname": "重庆市巴南区物业管理中心",
+                    "cellrowspan": 1,
+                    "cellcolspan": 4,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 1
+                },
+                {
+                    "id": "48461e2ea94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 2,
+                    "cellcol": 1,
+                    "cellwidth": 540,
+                    "celltype": "title",
+                    "cellcode": "title",
+                    "cellname": "物业专项维修资金归集楼盘备案申请书",
+                    "cellrowspan": 1,
+                    "cellcolspan": 4,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 2
+                },
+                {
+                    "id": "48467541a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 3,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "companyname",
+                    "cellname": "开发公司名称（签章）",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 3
+                },
+                {
+                    "id": "4846ad51a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 3,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "companyname",
+                    "cellname": "开发公司名称",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 4
+                },
+                {
+                    "id": "4846e161a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 4,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "projectname",
+                    "cellname": "项目名称",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 5
+                },
+                {
+                    "id": "48471922a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 4,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "projectname",
+                    "cellname": "项目名称",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 6
+                },
+                {
+                    "id": "48475b91a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 5,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "projectaddr",
+                    "cellname": "项目地址",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 7
+                },
+                {
+                    "id": "4847903aa94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 5,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "projectaddr",
+                    "cellname": "项目地址",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 8
+                },
+                {
+                    "id": "4847c6cba94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 6,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "ownername",
+                    "cellname": "法人代表名称",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 9
+                },
+                {
+                    "id": "4847f92aa94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 6,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "ownername",
+                    "cellname": "法人代表名称",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 10
+                },
+                {
+                    "id": "48483500a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 7,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "busicode",
+                    "cellname": "企业营业执照号码",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 11
+                },
+                {
+                    "id": "48487e3ba94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 7,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "busicode",
+                    "cellname": "企业营业执照号码",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 12
+                },
+                {
+                    "id": "4848c38ba94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 8,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "projapprno",
+                    "cellname": "建设工程规划许可证号",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 13
+                },
+                {
+                    "id": "4848f68aa94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 8,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "projapprno",
+                    "cellname": "建设工程规划许可证号",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 14
+                },
+                {
+                    "id": "4849298aa94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 9,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "buildsquare",
+                    "cellname": "建设总规模（㎡）",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 15
+                },
+                {
+                    "id": "484957e7a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 9,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "buildsquare",
+                    "cellname": "建设总规模（㎡）",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 16
+                },
+                {
+                    "id": "48498620a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 10,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "startdate",
+                    "cellname": "建设时间",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 17
+                },
+                {
+                    "id": "4849aabda94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 10,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "startdate",
+                    "cellname": "建设时间",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 18
+                },
+                {
+                    "id": "4849ee81a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 11,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "planenddate",
+                    "cellname": "计划竣工时间",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 19
+                },
+                {
+                    "id": "484a1a87a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 11,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "planenddate",
+                    "cellname": "计划竣工时间",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 20
+                },
+                {
+                    "id": "484a4822a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 12,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "opername",
+                    "cellname": "经办人姓名",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 21
+                },
+                {
+                    "id": "484a71dfa94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 12,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "opername",
+                    "cellname": "经办人姓名",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 22
+                },
+                {
+                    "id": "484a9aa8a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 13,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "operid",
+                    "cellname": "经办人身份证号",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 23
+                },
+                {
+                    "id": "484ac333a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 13,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "operid",
+                    "cellname": "经办人身份证号",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 24
+                },
+                {
+                    "id": "484aeccea94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 14,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "opermobile",
+                    "cellname": "经办人联系电话",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 25
+                },
+                {
+                    "id": "484b2493a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 14,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "text",
+                    "cellcode": "opermobile",
+                    "cellname": "经办人联系电话",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 26
+                },
+                {
+                    "id": "484b6f10a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 15,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "operrecomm",
+                    "cellname": "经办人员审核意见",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 27
+                },
+                {
+                    "id": "484bb217a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 15,
+                    "cellcol": 2,
+                    "cellwidth": 130,
+                    "celltype": "label",
+                    "cellcode": "operrecomm",
+                    "cellname": "",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 28
+                },
+                {
+                    "id": "484bf345a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 15,
+                    "cellcol": 3,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "checkrecomm",
+                    "cellname": "审批科审核意见",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 29
+                },
+                {
+                    "id": "484c31e2a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 15,
+                    "cellcol": 4,
+                    "cellwidth": 130,
+                    "celltype": "label",
+                    "cellcode": "checkrecomm",
+                    "cellname": "",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 30
+                },
+                {
+                    "id": "484c7285a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 16,
+                    "cellcol": 1,
+                    "cellwidth": 140,
+                    "celltype": "label",
+                    "cellcode": "leaderrecomm",
+                    "cellname": "物业中心领导审核意见",
+                    "cellrowspan": 1,
+                    "cellcolspan": 1,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 31
+                },
+                {
+                    "id": "484ca556a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 16,
+                    "cellcol": 2,
+                    "cellwidth": 400,
+                    "celltype": "label",
+                    "cellcode": "leaderrecomm",
+                    "cellname": "",
+                    "cellrowspan": 1,
+                    "cellcolspan": 3,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 32
+                },
+                {
+                    "id": "484ce172a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 17,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "1.《巴南区物业专项维修资金归集楼盘备案申请书》",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 33
+                },
+                {
+                    "id": "484d162ba94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 17,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "原件1份",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 34
+                },
+                {
+                    "id": "484d4903a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 18,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "2.开发企业营业执照",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 35
+                },
+                {
+                    "id": "484d8e79a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 18,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "复印件1份",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 36
+                },
+                {
+                    "id": "484dc69ca94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 19,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "3.建设工程规划许可证",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 37
+                },
+                {
+                    "id": "484e039ca94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 19,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "复印件1份",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 38
+                },
+                {
+                    "id": "484e4407a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 20,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "4.授权委托书",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 39
+                },
+                {
+                    "id": "484e919ea94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 20,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "原件1份",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 40
+                },
+                {
+                    "id": "484efa3ea94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 21,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "5.经办人身份证明",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 41
+                },
+                {
+                    "id": "484f2cf2a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 21,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "验原件收复印件",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 42
+                },
+                {
+                    "id": "484f5da7a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 22,
+                    "cellcol": 1,
+                    "cellwidth": 300,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "6.前期物业服务合同",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 43
+                },
+                {
+                    "id": "484fa302a94011edbbea000c2997486b",
+                    "printerid": "48459f45a94011edbbea000c2997486b",
+                    "cellrow": 22,
+                    "cellcol": 2,
+                    "cellwidth": 240,
+                    "celltype": "label",
+                    "cellcode": "",
+                    "cellname": "复印件1份",
+                    "cellrowspan": 1,
+                    "cellcolspan": 2,
+                    "ischar": "1",
+                    "rowisnotocr": "1",
+                    "colisocr": "1",
+                    "cellsort": 44
+                }
+            ]
+        }
+        let str = '<table style="border: 1px solid black"><tbody>'
+        $(function () {
+            $.each(content, (index, value) => {
+                $.each(value, (index, value) => {
+                    let label = '';
+                    let content = value.cellname;
+                    let test = ''
+                    /* 判断cellrol是否为偶数，如果是不新增行新增列，不是新增行 */
+                    if (value.celltype === 'title') {
+                        label = 'h2'
+                        test = `<tr>
+                                    <td>
+                                        <${label}> ${content} </${label}>
+                                    </td>
+                                </tr>`
+                    } else if (value.celltype === 'label') {
+                        label = 'label'
+                        test = `<tr>
+                                    <td>
+                                        <${label}> ${content} </${label}>
+                                    </td>
+                                </tr>`
+                        if(value.cellcol %2 === 0){
+                            console.log(value.cellcol);
+                        }
+                    } else if (value.celltype === 'text') {
+                        content = ''
+                        test = `<tr>
+                                    <td>
+                                        <input type="text"/>
+                                    </td>
+                                </tr>`
+                    }
+                    str = str + test
+                })
+            })
+            $('#app').append(str + '</tbody></table>')
+
+        })
+    </script>
+
+</body>
+
+</html>
