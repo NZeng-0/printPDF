@@ -454,7 +454,7 @@
                     "cellrow": 15,
                     "cellcol": 2,
                     "cellwidth": 130,
-                    "celltype": "label",
+                    "celltype": "text",
                     "cellcode": "operrecomm",
                     "cellname": "",
                     "cellrowspan": 1,
@@ -486,7 +486,7 @@
                     "cellrow": 15,
                     "cellcol": 4,
                     "cellwidth": 130,
-                    "celltype": "label",
+                    "celltype": "text",
                     "cellcode": "checkrecomm",
                     "cellname": "",
                     "cellrowspan": 1,
@@ -518,7 +518,7 @@
                     "cellrow": 16,
                     "cellcol": 2,
                     "cellwidth": 400,
-                    "celltype": "label",
+                    "celltype": "text",
                     "cellcode": "leaderrecomm",
                     "cellname": "",
                     "cellrowspan": 1,
@@ -723,44 +723,75 @@
             ]
         }
         let str = '<table style="border: 1px solid black"><tbody>'
+        let ros = 0;
+        let col = 0;
+        let arr = [];
+
+        /* str = str + `<td style="border: 1px solid black; width:${value[i].cellwidth};" 
+                                    rowspan="${value[i].cellrowspan}" colspan="${value[i].cellcolspan}">
+                                        
+                                    </td>` */
+
         $(function () {
             $.each(content, (index, value) => {
-                $.each(value, (index, value) => {
-                    let label = '';
-                    let content = value.cellname;
-                    let test = ''
-                    /* 判断cellrol是否为偶数，如果是不新增行新增列，不是新增行 */
-                    if (value.celltype === 'title') {
-                        label = 'h2'
-                        test = `<tr>
-                                    <td>
-                                        <${label}> ${content} </${label}>
-                                    </td>
-                                </tr>`
-                    } else if (value.celltype === 'label') {
-                        label = 'label'
-                        test = `<tr>
-                                    <td>
-                                        <${label}> ${content} </${label}>
-                                    </td>
-                                </tr>`
-                        if(value.cellcol %2 === 0){
-                            console.log(value.cellcol);
-                        }
-                    } else if (value.celltype === 'text') {
-                        content = ''
-                        test = `<tr>
-                                    <td>
-                                        <input type="text"/>
-                                    </td>
-                                </tr>`
+                // for (let i = 1; i < value.length; i++) {
+                //     ros = ros < value[i].cellrow ? value[i].cellrow : ros;
+                // }
+                // for (let i = 1; i < value.length; i++) {
+                //     col = col < value[i].cellcol ? value[i].cellcol : col;
+                // }
+                $.each(value, (index, val) => {
+                    if(val.cellcol %2 != 0){
+                        str = str + '<tr>'
                     }
-                    str = str + test
+                    
+                    test(val)
+                    if(val.cellcol %2 === 0){
+                        str = str + '</tr>'
+                    }
                 })
             })
-            $('#app').append(str + '</tbody></table>')
+            // let list = [col]
+            // for (let j = 0; j < col; j++) {
+            //     list[j] = j + 1
+            // }
 
+            for (let idx = 0; idx < arr.length; idx++) {
+                console.log(idx);
+                console.log(arr[idx].cellrow + arr[idx].cellcol);
+                // for (let i = 0; i < ros; i++) {
+                //     str = str + '<tr>'
+                //     str = str + '</tr>'
+                // }
+            }
+
+
+            /* if (value[i].cellrow === i + 1 && value[i].cellcol === ) {
+                        
+            } */
+
+            str = str + '</tbody></table>'
+            console.log(str );
+            $('#app').append(str)
         })
+        function test(value) {
+            if (value.celltype === 'title') {
+                str = str + `<td style="border: 1px solid black; width:${value.cellwidth};" 
+                                 rowspan="${value.cellrowspan}" colspan="${value.cellcolspan}">
+                                     <h2> ${value.cellname} </h2>
+                                 </td>`
+            } else if (value.celltype === 'label') {
+                str = str + `<td style="border: 1px solid black; width:${value.cellwidth};" 
+                                 rowspan="${value.cellrowspan}" colspan="${value.cellcolspan}">
+                                     <${value.celltype}> ${value.cellname} </${value.celltype}>
+                                 </td>`
+            } else if (value.celltype === 'text') {
+                str = str + `<td style="border: 1px solid black; width:${value.cellwidth};" 
+                             rowspan="${value.cellrowspan}" colspan="${value.cellcolspan}">
+                                     <input type="text"/>
+                                 </td>`
+            }
+        }
     </script>
 
 </body>
