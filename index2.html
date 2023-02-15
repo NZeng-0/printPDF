@@ -51,7 +51,21 @@
             合并列<input type="text" id="inputColspan"><br />
             宽度<input type="text" id="inputWidth"><br />
             高度<input type="text" id="inputHeight"><br />
-            <button id="t">添加</button>
+            文本水平方向
+            <select>
+                <option value="left">左对齐</option>
+                <option value="center">居中对齐</option>
+                <option value="right">右对齐</option>
+            </select>
+            <br>
+            文本垂直方向
+            <select>
+                <option value="left">上对齐</option>
+                <option value="center">居中对齐</option>
+                <option value="right">下对齐</option>
+            </select>
+            <br>
+            <button id="edit">添加</button>
         </div>
         <div id="show">
             <div id="app"></div>
@@ -60,15 +74,24 @@
 
     <script>
         $(function () {
+
+            // 判断是否是同一行合并列
+            let isSameLine = false
+
+            // 保存总行数和总列数
+            let totalRow = 0
+            let totalCol = 0
             $('#load').click(function () {
                 // 获取行数
                 let row = $('#row').val();
                 // 获取列数
                 let col = $('#col').val();
+                totalRow = row
+                totalCol = col
                 // 调用方法生成表格
                 load(row, col);
             })
-            $('#t').click(() => {
+            $('#edit').click(() => {
                 // 获取修改行
                 let row = $('#inputRow').val()
                 // 获取修改列
@@ -86,10 +109,14 @@
                 // 获取单元格高度
                 let height = $('#inputHeight').val()
 
+
+
                 // 行值类型转换 string -> number
                 row = Number(row) - 1
                 // 列值类型转换 string -> number
                 col = Number(col) - 1
+                // 如果合并行后 输入行不减1
+
 
                 // 获取具体行列交叉单元格
                 let cell = $(`#${row + '-' + col}`)
@@ -99,22 +126,93 @@
                 if (type === 'text') {
                     cell.append(`<input type="text">`)
                 } else {
-                    cell.append(`<${type}>${content}</${type}>`)
+                    cell
+                        .append(`<${type}>${content}</${type}>`)
+
                 }
-                // 判断合并行值是否为空字符串
-                if (rowSpan != '') {
-                    cell.attr("rowSpan", Number(rowSpan));
-                }
-                // 判断列合并值是否为空字符串
-                if (colSpan != '') {
+                /**
+                 * 第一种情况：在一行内进行列合并
+                 * 第二种情况：同一列中进行行合并
+                 * 第三种情况：不同行不同列同时进行列合并和行合并
+                */
+
+                // 第一种情况 两个值均不为空时
+                if (colSpan != '' && rowSpan != '') {
+                    // 合并列
                     cell.attr("colSpan", Number(colSpan))
-                    // 列合并后删除后面兄弟单元格
+                    // 合并行
+                    cell.attr("rowSpan", Number(rowSpan))
+                    // 列合并后多余单元格
+                    let surplusCol = colSpan - 1
+                    // 行合并数
+                    let rowMerge = rowSpan - 1
+
+                    if (isSameLine) {
+                        // 列合并
+                        for (let i = 1; i <= surplusCol + 1; i++) {
+                            isSameLine = false
+                            $(`#${row}-${totalCol - i}`).remove()
+                            /* 
+                                先合并两列 再合并2列会多出一列
+                                第二次循环时会少循环一个
+                            */
+                        }
+                        return
+                    } else {
+                        // 列合并
+                        for (let i = 1; i <= surplusCol; i++) {
+                            if((Number(colSpan)) >= 4/2 && (Number(colSpan)) < 4){
+                                isSameLine = true
+                            }
+                            $(`#${row}-${totalCol - i}`).remove()
+                            /* 
+                                先合并两列 再合并2列会多出一列
+                                第二次循环时会少循环一个
+                            */
+                        }
+                        return
+                    }
+                    // 如果行合并合并行数为一不进行“行合并”
+                    if (Number(rowSpan) == 1) {
+                        return
+                    }
+                    // 行合并
+                    for (let i = 1; i <= surplusCol + 1; i++) {
+                        //合并之后的行全部单元格删除 所以surplusCol+1
+                        $(`#${row + rowMerge}-${totalCol - i}`).remove()
+                    }
                     /* 
-                        动态计算合并剩余数量
-                        合并3列，一共4列，删除2列
-                        删除顺序从后往前删除
+                        问题 合并行后 id不变，新输入的id匹配不到节点
+
                     */
-                    cell.next().remove()
+                }
+                // 第二种情况 
+                // 判断列合并值是否为空字符串
+                else if (colSpan != '') {
+                    // 合并指定数量单元格
+                    cell.attr("colSpan", Number(colSpan))
+                    // 删除多余单元格
+                    let deleteNum = colSpan - 1
+                    // 合并数量减去基数 1 得到需要删除单元格的数量
+                    for (let i = 1; i <= deleteNum; i++) {
+                        // 循环小于需要删除单元格数量
+                        // 总列数减去当前循环数等于最后一个单元格（i增加时，列数递减。达到从后往前删除）
+                        $(`#${row}-${totalCol - i}`).remove()
+                    }
+                }
+                // 第三种情况
+                // 判断合并行值是否为空字符串
+                else if (rowSpan != '') {
+                    // 行合并
+                    cell.attr("rowSpan", Number(rowSpan))
+                    // 合并行数
+                    let deleteNum = rowSpan - 1
+                    // 合并数量减去基数 1 得到需要删除单元格的数量
+                    for (let i = 1; i <= deleteNum; i++) {
+                        // 循环小于需要删除单元格数量
+                        // 总列数减去当前循环数等于最后一个单元格（i增加时，列数递减。达到从后往前删除）
+                        $(`#${row + deleteNum}-${totalCol - i}`).remove()
+                    }
                 }
             })
         })
@@ -141,6 +239,8 @@
             // 添加html字符串
             $('#app').append(tab)
         }
+
+
     </script>
 </body>
 
