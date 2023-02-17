@@ -1,5 +1,6 @@
 $(function () {
 
+    let list = []
     // 判断是否是同一行合并列
     let isSameLine = false
 
@@ -29,10 +30,6 @@ $(function () {
         let rowSpan = $('#inputRowspan').val()
         // 获取列合并值
         let colSpan = $('#inputColspan').val()
-        // 获取单元格宽度
-        let width = $('#inputWidth').val()
-        // 获取单元格高度
-        let height = $('#inputHeight').val()
         // 获取水平对齐方向
         let levelDire = $('#level option:selected').val()
 
@@ -59,6 +56,10 @@ $(function () {
                     .append(`<${type}>${content}</${type}>`)
             }
         }
+
+        // 调用方法获取单元格信息
+        getCellInfo(`#${row + '-' + col}`, list, rowSpan, colSpan)
+
         /**
          * 第一种情况：在一行内进行列合并
          * 第二种情况：同一列中进行行合并
@@ -99,7 +100,6 @@ $(function () {
                         第二次循环时会少循环一个
                     */
                 }
-                return
             }
             // 如果行合并合并行数为一不进行“行合并”
             if (Number(rowSpan) == 1) {
@@ -110,10 +110,6 @@ $(function () {
                 //合并之后的行全部单元格删除 所以surplusCol+1
                 $(`#${row + rowMerge}-${totalCol - i}`).remove()
             }
-            /* 
-                问题 合并行后 id不变，新输入的id匹配不到节点
-
-            */
         }
         // 第二种情况 
         // 判断列合并值是否为空字符串
@@ -144,6 +140,8 @@ $(function () {
             }
         }
     })
+
+
 })
 
 /**
@@ -167,5 +165,75 @@ function load(row, col) {
     tab = tab + '</table>'
     // 添加html字符串
     $('#app').append(tab)
+}
+
+/**
+ * 节点对象模型
+ * @cellrow 单元格行标
+ * @cellcol 单元格列表
+ * @cellwidth 单元格宽度
+ * @celltype 单元格类型
+ * @cellname 单元格文本内容(如果有)
+ * @cellrowspan 单元格行合并值
+ * @cellcolspan 单元格列合并值
+*/
+function nodeObj(cellrow, cellcol, cellwidth, celltype, cellname, cellrowspan, cellcolspan) {
+    this.cellrow = cellrow;
+    this.cellcol = cellcol;
+    this.cellwidth = cellwidth;
+    this.celltype = celltype;
+    this.cellname = cellname;
+    this.cellrowspan = cellrowspan;
+    this.cellcolspan = cellcolspan;
+}
+
+/**
+ * 获取单元格信息 --行 列位置；类型；宽度；内容；行列合并单元格个数
+ * @id 需要获取信息的单元格id 
+ * 
+*/
+function getCellInfo(id, list, row, col) {
+    // 获取单元格
+    let cell = $(id)
+
+    // id （行列）需要各自+1；因为前面减一
+    let temp = id.split('-')
+    // 行
+    let rowNum = temp[0].split('#')
+    rowNum = rowNum[1].split('#')
+    // 单元格行数
+    rowNum = (Number(rowNum))+1
+    // 列
+    let colNum = temp[1]
+    // 单元格列数
+    colNum = (Number(colNum))+1
+
+    // 单元格宽度
+    let widthNum = cell.css("width").split('p')[0]
+
+    // 匹配标签类型正则
+    let labelReg = /<.+ \s*/
+    // 获取子标签匹配类型 如果是<input>转为title
+    let str = cell.html().match(labelReg)
+    // 标签类型
+    let label = str[0].substring(1, str[0].length).trim()
+    // 判断最后是否 ‘input’ 和 ‘h2’ 标签，如果是需要转换称text和title
+    label = label === 'h2' ? 'title' : label
+    label = label === 'input' ? 'text' : label
+
+
+    // 匹配子标签内容正则
+    let ContentReg = />.+</
+    let contentStr = cell.html().match(ContentReg)
+    // 标签内容
+    let content = contentStr[0].substring(1, contentStr[0].length - 1).trim()
+
+    // 合并行数
+    Number(row)
+    // 合并列数
+    Number(col)
+
+    let ObjJsonStr = JSON.stringify(new nodeObj(rowNum,colNum,widthNum,label,content,Number(row),Number(col)))
+    list.push(ObjJsonStr)
 }
 
