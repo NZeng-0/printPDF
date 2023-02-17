@@ -31,3 +31,9 @@ let obj2 = {
     "cellrowspan": 1, 
     "cellcolspan": 4
 }
+let a = '<input type=\"text\" id=\"0-0-i\">'
+let input = 'input type="text" id="[object'
+let labelReg = /<.+ \s*/
+let result2 = a.match(labelReg)[0].split(' ')
+console.log(result2[0].substring(1, result2[0].length).trim());
+
