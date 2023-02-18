@@ -1,15 +1,18 @@
+// 每个单元格对象存放数组
+let list = []
+
 $(function () {
 
-    // 生成单元格id 双向数据
-    let cell
-    // 每个单元格对象存放数组
-    let list = []
     // 判断是否是同一行合并列
     let isSameLine = false
 
-    // 保存总行数和总列数
-    // let totalRow = 0
+    // 保存总列数
     let totalCol = 0
+    
+    $('#getListInfo').click(()=>{
+        console.log(list);
+    })
+
     $('#load').click(function () {
         // 获取行数
         let row = $('#row').val();
@@ -21,20 +24,18 @@ $(function () {
         load(row, col);
     })
     $('#edit').click(() => {
-        // 获取修改行
+        // 获取添加行
         let row = $('#inputRow').val()
-        // 获取修改列
+        // 获取添加列
         let col = $('#inputCol').val()
         // 获取添加标签类型
-        let type = $('#inputType').val()
+        let type = $('#inputType option:selected').val()
         // 获取添加标签内容
         let content = $('#inputContent').val()
         // 获取行合并值
         let rowSpan = $('#inputRowspan').val()
         // 获取列合并值
         let colSpan = $('#inputColspan').val()
-        // 获取水平对齐方向
-        let levelDire = $('#level option:selected').val()
 
         // 行值类型转换 string -> number
         row = Number(row) - 1
@@ -48,94 +49,31 @@ $(function () {
         // 是 标签类型改为 input输入框
         // 不是 标签类型以及输入值不变
         if (type === 'text') {
-            cell.append(`<input type="text" id="${row + '-' + col}-i" >`)
+            cell.append(`<input 
+                            type="text" 
+                            id="${row + '-' + col}-i" 
+                            class="form-control" 
+                            OnFocus="updateCellName(this)" 
+                        >`)
         } else {
-            // 如果选中文字对齐方式 append时字符串加入行内style
-            if (levelDire != '') {
-                cell
-                    .append(`<${type} style='text-align:${levelDire};'>${content}</${type}>`)
-            } else {
-                cell
-                    .append(`<${type}>${content}</${type}>`)
-            }
+            cell.append(`<${type}> ${content} </${type}>`)
         }
 
         // 调用方法获取单元格信息
         getCellInfo(`#${row + '-' + col}`, list, rowSpan, colSpan)
 
-        /**
-         * 第一种情况：在一行内进行列合并
-         * 第二种情况：同一列中进行行合并
-         * 第三种情况：不同行不同列同时进行列合并和行合并
-        */
-
-        // 第一种情况 两个值均不为空时
+        // 两个合并值均不为空时
         if (colSpan != '' && rowSpan != '') {
             // 合并列
             cell.attr("colSpan", Number(colSpan))
             // 合并行
             cell.attr("rowSpan", Number(rowSpan))
-            // 列合并后多余单元格
-            let surplusCol = colSpan - 1
-            // 行合并数
-            let rowMerge = rowSpan - 1
-
-            if (isSameLine) {
-                // 列合并
-                for (let i = 1; i <= surplusCol + 1; i++) {
-                    isSameLine = false
-                    $(`#${row}-${totalCol - i}`).remove()
-                }
-                return
-            } else {
-                // 列合并
-                for (let i = 1; i <= surplusCol; i++) {
-                    if ((Number(colSpan)) >= 4 / 2 && (Number(colSpan)) < 4) {
-                        isSameLine = true
-                    }
-                    $(`#${row}-${totalCol - i}`).remove()
-                    /* 
-                        先合并两列 再合并2列会多出一列
-                        第二次循环时会少循环一个
-                    */
-                }
-            }
-            // 如果行合并合并行数为一不进行“行合并”
-            if (Number(rowSpan) == 1) {
-                return
-            }
-            // 行合并
-            for (let i = 1; i <= surplusCol + 1; i++) {
-                //合并之后的行全部单元格删除 所以surplusCol+1
-                $(`#${row + rowMerge}-${totalCol - i}`).remove()
-            }
-        }
-        // 第二种情况 
-        // 判断列合并值是否为空字符串
-        else if (colSpan != '') {
-            // 合并指定数量单元格
-            cell.attr("colSpan", Number(colSpan))
-            // 删除多余单元格
-            let deleteNum = colSpan - 1
-            // 合并数量减去基数 1 得到需要删除单元格的数量
-            for (let i = 1; i <= deleteNum; i++) {
-                // 循环小于需要删除单元格数量
-                // 总列数减去当前循环数等于最后一个单元格（i增加时，列数递减。达到从后往前删除）
+            // 列合并后多余单元格 如果合并列等于 总列数除以二的值 需要并其他列合并多删除一个单元格
+            colSpan = Number(colSpan) === 4 / 2 ? Number(colSpan) : Number(colSpan) - 1
+            // 列合并
+            for (let i = 1; i <= colSpan; i++) {
+                isSameLine = false
                 $(`#${row}-${totalCol - i}`).remove()
-            }
-        }
-        // 第三种情况
-        // 判断合并行值是否为空字符串
-        else if (rowSpan != '') {
-            // 行合并
-            cell.attr("rowSpan", Number(rowSpan))
-            // 合并行数
-            let deleteNum = rowSpan - 1
-            // 合并数量减去基数 1 得到需要删除单元格的数量
-            for (let i = 1; i <= deleteNum; i++) {
-                // 循环小于需要删除单元格数量
-                // 总列数减去当前循环数等于最后一个单元格（i增加时，列数递减。达到从后往前删除）
-                $(`#${row + deleteNum}-${totalCol - i}`).remove()
             }
         }
     })
@@ -147,31 +85,33 @@ $(function () {
     */
     function load(row, col) {
         // 模板字符串
-        let tab = `<table style="border: 1px solid black;">`
+        let tab = `<div class="panel panel-default"> 
+                        <div class="panel-body"> 
+                            <table class="table table-bordered table-hover table-condensed" >`
         // 遍历输入行数
         for (let i = 0; i < row; i++) {
             tab = tab + `<tr>`
             // 遍历输入列数
             for (let j = 0; j < col; j++) {
                 // 生成单元格
-                tab = tab + `<td id="${i + '-' + j}" style="border: 0.3px solid black; width:140px;height:30px"></td>`
+                tab = tab + `<td id="${i + '-' + j}" style="width:141px;height:30px"></td>`
             }
             tab = tab + '</tr>'
         }
-        tab = tab + '</table>'
+        tab = tab + `</table> </div> </div>`
         // 添加html字符串
         $('#app').append(tab)
     }
 
     /**
      * 节点对象模型
-     * @cellrow 单元格行标
-     * @cellcol 单元格列表
-     * @cellwidth 单元格宽度
-     * @celltype 单元格类型
-     * @cellname 单元格文本内容(如果有)
-     * @cellrowspan 单元格行合并值
-     * @cellcolspan 单元格列合并值
+     * @param {number} cellrow 单元格行标
+     * @param {number} cellcol 单元格列表
+     * @param {number} cellwidth 单元格宽度
+     * @param {string} celltype 单元格类型
+     * @param {string} cellname 单元格文本内容
+     * @param {number} cellrowspan 单元格行合并值
+     * @param {number} cellcolspan 单元格列合并值
     */
     function nodeObj(cellrow, cellcol, cellwidth, celltype, cellname, cellrowspan, cellcolspan) {
         this.cellrow = cellrow;
@@ -185,8 +125,10 @@ $(function () {
 
     /**
      * 获取单元格信息 --行 列位置；类型；宽度；内容；行列合并单元格个数
-     * @id 需要获取信息的单元格id 
-     * 
+     * @param {number} id 需要获取信息的单元格id
+     * @param {Array} list 存放节点对象字符串的数组
+     * @param {string} row 单元格行合并的值
+     * @param {string} col 单元格列合并的值
     */
     function getCellInfo(id, list, row, col) {
         // 获取单元格
@@ -206,25 +148,41 @@ $(function () {
 
         // 单元格宽度
         /*
-            列合并1原本宽度
-            如果有合并*合并数
+            列合并1宽度不变为初始化宽度
+            如果有合并：初始化宽度 * 合并数
         */
         let widthNum = cell.css("width").split('p')[0]
-
+        if (Number(col) > 1) {
+            widthNum = Number(widthNum * Number(col))
+        }
         // 匹配标签类型正则
         let labelReg = /<.+ \s*/
-        // 获取子标签匹配类型 如果是<input>转为title
+        // 获取子标签类型 如果是<input>转为title
         let str = cell.html().match(labelReg)[0].split(' ')
+
         // 标签类型
-        let label = str[0].substring(1, str[0].length).trim()
+        let label;
+        // 因为input标签截取时没有'>'，所以需要判断是否是'<input'如果是 length不用减一
+        if (str[0] === '<input') {
+            label = str[0].substring(1, str[0].length).trim()
+        } else {
+            label = str[0].substring(1, str[0].length - 1).trim()
+        }
+
+        // 如果子标签类型是 input，那么宽度采用 初始化宽度 * 合并列数量 
+        if (label === 'input') {
+            widthNum = 140 * Number(col)
+        }
+
         // 判断最后是否 ‘input’ 和 ‘span’ 标签，如果是需要转换称text和title
         label = label === 'h4' ? 'title' : label
         label = label === 'input' ? 'text' : label
 
         // 如果标签不是 input 就匹配标签文本；是input就获取value值
         let content
+        // input标签创建时没有默认值，所以先给一个默认值 后期再修改
         if (label === 'text') {
-            content = 'input输入的值'
+            content = ' '
         } else {
             // 匹配子标签内容正则
             let ContentReg = />.+</
@@ -232,25 +190,38 @@ $(function () {
             // 标签内容
             content = contentStr[0].substring(1, contentStr[0].length - 1).trim()
         }
+        // 创建节点对象，并转为json字符串
         let ObjJsonStr = JSON.stringify(
             new nodeObj(rowNum, colNum, widthNum, label, content, Number(row), Number(col))
         )
+        // 将字符串添加进数组中
         list.push(ObjJsonStr)
-        console.log(list);
     }
+})
 
-    let obj = {}
-    const text = $(`${cell}-i`);
-    Object.defineProperty(obj, 'text', {
-        get: function () {
-
-        },
-        set: function (val) {
-            content = val
+/**
+ * 更新数组中输入框的值
+ * @param {number} id 输入框id
+ */
+function updateCellName(id) {
+    // 根据id获取输入框
+    const text = $(id);
+    // 分割id 获得注册id的每个部分
+    let ids = text.attr('id').split('-')
+    // 获取 行 （需要+1）
+    let idRow = Number(ids[0]) + 1
+    // 获取 列 （需要+1）
+    let idCol = Number(ids[1]) + 1
+    // 输入框失焦触发，遍历数组，cellrow cellcol和idRow idCol相等时，cellname改为输入框的值
+    text.blur(() => {
+        for (let i = 0; i < list.length; i++) {
+            // 每一项字符串转对象（字符串为json格式，转为匿名对象）
+            list[i] = JSON.parse(list[i])
+            if (list[i].cellrow === idRow && list[i].cellcol === idCol) {
+                list[i].cellname = text.val()
+            }
+            // 对象重新转为json字符串
+            list[i] = JSON.stringify(list[i])
         }
     })
-    text.blur(function (e) {
-        obj.text = e.target.value
-    })
-
-})
+}
