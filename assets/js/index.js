@@ -8,9 +8,18 @@ $(function () {
 
     // 保存总列数
     let totalCol = 0
-    
-    $('#getListInfo').click(()=>{
-        console.log(list);
+
+    $('#getListInfo').click(() => {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/Interface_war/test",
+            contentType: "application/json", //必须这样写
+            dataType: "json",
+            data: JSON.stringify(list),
+            success: function (data) {
+                console.log('ok');
+            }
+        })
     })
 
     $('#load').click(function () {
