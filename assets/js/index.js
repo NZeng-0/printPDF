@@ -1,14 +1,49 @@
 // 每个单元格对象存放数组
-let list = []
+let list = new Array(0)
 
 $(function () {
-
-    // 判断是否是同一行合并列
-    let isSameLine = false
 
     // 保存总列数
     let totalCol = 0
 
+    /**
+     * 恢复单元格合并
+     */
+    $('#callback').click(()=>{
+        // 行
+        let callbackCol = $('#callbackCol').val()
+        // 列
+        let callbackRow = $('#callbackRow').val()
+        // 拼接id
+        let id = (Number(callbackCol)-1) +'-'+ (Number(callbackRow)-1)
+        // 获取父节点
+        let master = $(`#${id}`).parent()
+        console.log(master);
+        // 新单元格的字符串
+        let str = ``
+        for(let i=totalCol; i>0; i--){
+            str = str + `<td id="${(Number(callbackCol)-1)+'-'+(totalCol - i)}" style="width:141px;height:30px" >
+            </td>`
+        }
+        // 删除行内所有单元格
+        master.empty();
+        // 加入新单元格
+        master.append(str)
+        
+        /**
+         *  删除后 数组中json字符串为改变 发送后端会发送过去 需要删除重置合并的单元格信息 
+         */ 
+        list = $.grep(list,(val,iex)=>{
+            val = JSON.parse(val)
+            if(val.cellrow !== Number(callbackRow) && val.cellcol !== Number(callbackCol)){
+                val = JSON.stringify(val)
+                return val
+            }
+        })
+    })
+    /**
+     * 向后端api发送节点数据
+    */
     $('#getListInfo').click(() => {
         $.ajax({
             type: "POST",
@@ -17,11 +52,14 @@ $(function () {
             dataType: "json",
             data: JSON.stringify(list),
             success: function (data) {
-                console.log('ok');
+                console.log(data);
             }
         })
     })
 
+    /**
+     * 生成表格
+     */
     $('#load').click(function () {
         // 获取行数
         let row = $('#row').val();
@@ -32,6 +70,10 @@ $(function () {
         // 调用方法生成表格
         load(row, col);
     })
+
+    /**
+     * 生成单元格，单元格合并文本等
+     */
     $('#edit').click(() => {
         // 获取添加行
         let row = $('#inputRow').val()
@@ -78,10 +120,9 @@ $(function () {
             // 合并行
             cell.attr("rowSpan", Number(rowSpan))
             // 列合并后多余单元格 如果合并列等于 总列数除以二的值 需要并其他列合并多删除一个单元格
-            colSpan = Number(colSpan) === 4 / 2 ? Number(colSpan) : Number(colSpan) - 1
-            // 列合并
+            colSpan = Number(colSpan) === totalCol / 2 ? Number(colSpan) : Number(colSpan) - 1
+            // 删除多余单元格
             for (let i = 1; i <= colSpan; i++) {
-                isSameLine = false
                 $(`#${row}-${totalCol - i}`).remove()
             }
         }
@@ -89,8 +130,8 @@ $(function () {
 
     /**
      * 生成表格方法
-     * @row 行
-     * @col 列
+     * @param {number} row 行
+     * @param {number} col 列
     */
     function load(row, col) {
         // 模板字符串
@@ -103,7 +144,7 @@ $(function () {
             // 遍历输入列数
             for (let j = 0; j < col; j++) {
                 // 生成单元格
-                tab = tab + `<td id="${i + '-' + j}" style="width:141px;height:30px"></td>`
+                tab = tab + `<td id="${i + '-' + j}" style="width:141px;height:30px" Ondblclick="edit(this)"></td>`
             }
             tab = tab + '</tr>'
         }
@@ -232,5 +273,23 @@ function updateCellName(id) {
             // 对象重新转为json字符串
             list[i] = JSON.stringify(list[i])
         }
+    })
+}
+
+function edit(td){
+    let child = $(td).contents()
+    let childType = child.prop("nodeName")
+    let val = child.text()
+    $(td).html(`<input 
+            type="text" 
+            id="input" 
+            class="form-control" 
+            OnFocus="updateCellName(this)" 
+            value=${val}        
+        >`)
+    $('#input').focus()
+    $('#input').blur(()=>{
+        let newVal = $('#input').val()
+        $(td).html(`<${childType}> ${newVal} </${childType}>`)
     })
 }
