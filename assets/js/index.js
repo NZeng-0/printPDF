@@ -9,33 +9,33 @@ $(function () {
     /**
      * 恢复单元格合并
      */
-    $('#callback').click(()=>{
+    $('#callback').click(() => {
         // 行
         let callbackCol = $('#callbackCol').val()
         // 列
         let callbackRow = $('#callbackRow').val()
         // 拼接id
-        let id = (Number(callbackCol)-1) +'-'+ (Number(callbackRow)-1)
+        let id = (Number(callbackCol) - 1) + '-' + (Number(callbackRow) - 1)
         // 获取父节点
         let master = $(`#${id}`).parent()
         console.log(master);
         // 新单元格的字符串
         let str = ``
-        for(let i=totalCol; i>0; i--){
-            str = str + `<td id="${(Number(callbackCol)-1)+'-'+(totalCol - i)}" style="width:141px;height:30px" >
+        for (let i = totalCol; i > 0; i--) {
+            str = str + `<td id="${(Number(callbackCol) - 1) + '-' + (totalCol - i)}" style="width:141px;height:30px" >
             </td>`
         }
         // 删除行内所有单元格
         master.empty();
         // 加入新单元格
         master.append(str)
-        
+
         /**
          *  删除后 数组中json字符串为改变 发送后端会发送过去 需要删除重置合并的单元格信息 
-         */ 
-        list = $.grep(list,(val,iex)=>{
+         */
+        list = $.grep(list, (val, iex) => {
             val = JSON.parse(val)
-            if(val.cellrow !== Number(callbackRow) && val.cellcol !== Number(callbackCol)){
+            if (val.cellrow !== Number(callbackRow) && val.cellcol !== Number(callbackCol)) {
                 val = JSON.stringify(val)
                 return val
             }
@@ -144,7 +144,7 @@ $(function () {
             // 遍历输入列数
             for (let j = 0; j < col; j++) {
                 // 生成单元格
-                tab = tab + `<td id="${i + '-' + j}" style="width:141px;height:30px" Ondblclick="edit(this)"></td>`
+                tab = tab + `<td id="${i + '-' + j}" style="width:141px;height:30px" Ondblclick="revise(this)"></td>`
             }
             tab = tab + '</tr>'
         }
@@ -267,7 +267,9 @@ function updateCellName(id) {
         for (let i = 0; i < list.length; i++) {
             // 每一项字符串转对象（字符串为json格式，转为匿名对象）
             list[i] = JSON.parse(list[i])
+            // 输入的行列值和对象的行列值对比
             if (list[i].cellrow === idRow && list[i].cellcol === idCol) {
+                // 匹配成功时 对象原本的cellname值替换为新输入的值
                 list[i].cellname = text.val()
             }
             // 对象重新转为json字符串
@@ -276,20 +278,50 @@ function updateCellName(id) {
     })
 }
 
-function edit(td){
+/**
+ * 节点双击触发时，子标签替换为input输入框，value值为原td的值。
+ * 输入失焦后输入款输入的值会替换原本td子标签的值
+ * @param {object} td 触发节点
+ */
+function revise(td) {
+    // 节点对象的子标签
     let child = $(td).contents()
+    // 子标签的标签类型
     let childType = child.prop("nodeName")
+    // 子标签的值
     let val = child.text()
+
+    // id （行列）需要各自+1；因为前面减一
+    let temp = $(td).attr('id').split('-')
+    // 列
+    let rowNum = Number(temp[0].trim()) + 1
+    // 行
+    let colNum = Number(temp[1].trim()) + 1
+
+    // 单元格生成input输入框 
     $(td).html(`<input 
             type="text" 
             id="input" 
             class="form-control" 
             OnFocus="updateCellName(this)" 
-            value=${val}        
+            value=${val} 
         >`)
+    // 输入框获取焦点
     $('#input').focus()
-    $('#input').blur(()=>{
+    $('#input').dblclick(e => { e.stopPropagation() })
+    // 输入框失焦时输入框值复制到子标签上，同时td子标签替换为原本的子标签
+    $('#input').blur(() => {
+        // 获取input输入的值
         let newVal = $('#input').val()
+        // 单元格恢复之前的子标签
         $(td).html(`<${childType}> ${newVal} </${childType}>`)
+        // 遍历数组 更改对应 单元格对象 的cellname
+        for (let i = 0; i < list.length; i++) {
+            list[i] = JSON.parse(list[i])
+            if (list[i].cellrow === rowNum && list[i].cellcol === colNum) {
+                list[i].cellname = newVal
+            }
+            list[i] = JSON.stringify(list[i])
+        }
     })
 }
