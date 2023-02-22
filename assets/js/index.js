@@ -18,11 +18,10 @@ $(function () {
         let id = (Number(callbackCol) - 1) + '-' + (Number(callbackRow) - 1)
         // 获取父节点
         let master = $(`#${id}`).parent()
-        console.log(master);
         // 新单元格的字符串
-        let str = ``
+        let str
         for (let i = totalCol; i > 0; i--) {
-            str = str + `<td id="${(Number(callbackCol) - 1) + '-' + (totalCol - i)}" style="width:141px;height:30px" >
+            str = str + `<td id="${(Number(callbackCol) - 1) + '-' + (totalCol - i)}" style="width:141px;height:30px" Ondblclick="revise(this)" >
             </td>`
         }
         // 删除行内所有单元格
